@@ -1,7 +1,6 @@
-use crate::{
-    solver::Solver,
-    utils::{occurrences, sorted},
-};
+use itertools::Itertools;
+
+use crate::{solver::Solver, utils::sorted};
 
 #[derive(Debug)]
 pub struct Solver01 {
@@ -35,12 +34,12 @@ impl Solver for Solver01 {
     }
 
     fn part_02(&self) -> String {
-        let right_occurrences = occurrences(&self.right_list);
+        let right_occurrences = self.right_list.iter().copied().counts();
 
         self.left_list
             .iter()
             .copied()
-            .map(|id| id * right_occurrences.get(&id).unwrap_or(&0))
+            .map(|id| id * (*right_occurrences.get(&id).unwrap_or(&0) as u32))
             .sum::<u32>()
             .to_string()
     }

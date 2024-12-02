@@ -1,4 +1,5 @@
 use clap::Parser;
+use std::time::{Duration, Instant};
 
 use crate::solver::Solver;
 
@@ -18,14 +19,15 @@ fn main() {
     let input = std::fs::read_to_string(&input_path).unwrap();
 
     let solver: Box<dyn Solver> = match args.day {
-        01 => solutions::day_01::Solver01::new(&input),
+        01 => solutions::Solver01::new(&input),
+        02 => solutions::Solver02::new(&input),
         _ => todo!(),
     };
 
-    let part1 = solver.part_01();
-    println!("Day {:02}, Part 1:\n{}", args.day, part1);
-    let part2 = solver.part_02();
-    println!("day {:02}, Part 2:\n{}", args.day, part2);
+    let (part1, elapsed) = time(|| solver.part_01());
+    println!("Day {:02}, Part 1 ({elapsed:?}): {}", args.day, part1);
+    let (part2, elapsed) = time(|| solver.part_02());
+    println!("Day {:02}, Part 2 ({elapsed:?}): {}", args.day, part2);
 }
 
 #[derive(Clone, Debug, Parser)]
@@ -34,4 +36,11 @@ pub struct Args {
 
     #[clap(long)]
     pub sample: bool,
+}
+
+fn time<F: FnOnce() -> String>(f: F) -> (String, Duration) {
+    let now = Instant::now();
+    let result = f();
+    let elapsed = now.elapsed();
+    (result, elapsed)
 }
