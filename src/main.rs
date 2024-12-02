@@ -4,10 +4,10 @@ use crate::solver::Solver;
 
 mod solutions;
 mod solver;
+mod utils;
 
 fn main() {
     let args = Args::parse();
-    dbg!(&args);
 
     let input_filename = if args.sample {
         "sample.txt"
