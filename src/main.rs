@@ -19,9 +19,9 @@ fn main() {
     let input = std::fs::read_to_string(&input_path).unwrap();
 
     let solver: Box<dyn Solver> = match args.day {
-        01 => solutions::Solver01::new(&input),
-        02 => solutions::Solver02::new(&input),
-        03 => solutions::Solver03::new(&input),
+        1 => Box::new(solutions::Solver01::new(&input)),
+        2 => Box::new(solutions::Solver02::new(&input)),
+        3 => Box::new(solutions::Solver03::new(&input)),
         _ => todo!(),
     };
 

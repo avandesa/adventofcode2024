@@ -9,7 +9,7 @@ pub struct Solver01 {
 }
 
 impl Solver for Solver01 {
-    fn new(input: &str) -> Box<Self>
+    fn new(input: &str) -> Self
     where
         Self: Sized,
     {
@@ -18,16 +18,16 @@ impl Solver for Solver01 {
             .map(|line| line.split_once("   ").unwrap())
             .map(|(a, b)| (a.parse::<u32>().unwrap(), b.parse::<u32>().unwrap()))
             .collect();
-        Box::new(Self {
+        Self {
             left_list,
             right_list,
-        })
+        }
     }
 
     fn part_01(&self) -> String {
         sorted(&self.left_list)
             .into_iter()
-            .zip(sorted(&self.right_list).into_iter())
+            .zip(sorted(&self.right_list))
             .map(|(a, b)| a.abs_diff(b))
             .sum::<u32>()
             .to_string()

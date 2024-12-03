@@ -5,7 +5,7 @@ use regex::Regex;
 use crate::solver::Solver;
 
 static RE_STRING: &str = r"mul\((\d+),(\d+)\)";
-const RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(RE_STRING).unwrap());
+static RE: LazyLock<Regex> = LazyLock::new(|| Regex::new(RE_STRING).unwrap());
 
 #[derive(Clone, Copy, Debug)]
 struct Mul(u32, u32);
@@ -13,7 +13,7 @@ struct Mul(u32, u32);
 pub struct Solver03(Vec<Mul>);
 
 impl Solver for Solver03 {
-    fn new(input: &str) -> Box<Self>
+    fn new(input: &str) -> Self
     where
         Self: Sized,
     {
@@ -26,7 +26,7 @@ impl Solver for Solver03 {
             })
             .collect();
 
-        Box::new(Self(commands))
+        Self(commands)
     }
 
     fn part_01(&self) -> String {

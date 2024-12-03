@@ -1,9 +1,9 @@
-/// Return a sorted clone of the given `Vec`
-pub fn sorted<T>(vec: &Vec<T>) -> Vec<T>
+/// Return a sorted clone of the given slice
+pub fn sorted<T>(s: &[T]) -> Vec<T>
 where
     T: Clone + Ord,
 {
-    let mut vec = vec.clone();
+    let mut vec = s.to_owned();
     vec.sort();
     vec
 }

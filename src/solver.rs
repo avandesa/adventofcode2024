@@ -1,5 +1,5 @@
 pub trait Solver {
-    fn new(input: &str) -> Box<Self>
+    fn new(input: &str) -> Self
     where
         Self: Sized;
     fn part_01(&self) -> String;

@@ -20,11 +20,11 @@ impl Report {
         differences
             .iter()
             .copied()
-            .all(|diff| MIN_CHANGE <= diff && diff <= MAX_CHANGE)
+            .all(|diff| (MIN_CHANGE..=MAX_CHANGE).contains(&diff))
             || differences
                 .iter()
                 .copied()
-                .all(|diff| -MAX_CHANGE <= diff && diff <= -MIN_CHANGE)
+                .all(|diff| (-MAX_CHANGE..=-MIN_CHANGE).contains(&diff))
     }
 
     fn remove_level(&self, idx: usize) -> Self {
@@ -48,7 +48,7 @@ pub struct Solver02 {
 }
 
 impl Solver for Solver02 {
-    fn new(input: &str) -> Box<Self>
+    fn new(input: &str) -> Self
     where
         Self: Sized,
     {
@@ -59,10 +59,10 @@ impl Solver for Solver02 {
                     .map(|val| val.parse().unwrap())
                     .collect()
             })
-            .map(|values| Report(values))
+            .map(Report)
             .collect();
 
-        Box::new(Self { reports })
+        Self { reports }
     }
 
     fn part_01(&self) -> String {
