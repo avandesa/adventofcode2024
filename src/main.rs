@@ -18,12 +18,15 @@ fn main() {
     let input_path = format!("inputs/{:02}/{input_filename}", args.day);
     let input = std::fs::read_to_string(&input_path).unwrap();
 
-    let solver: Box<dyn Solver> = match args.day {
-        1 => Box::new(solutions::Solver01::new(&input)),
-        2 => Box::new(solutions::Solver02::new(&input)),
-        3 => Box::new(solutions::Solver03::new(&input)),
-        _ => todo!(),
-    };
+    let (solver, elapsed) = time(|| -> Box<dyn Solver> {
+        match args.day {
+            1 => Box::new(solutions::Solver01::new(&input)),
+            2 => Box::new(solutions::Solver02::new(&input)),
+            3 => Box::new(solutions::Solver03::new(&input)),
+            _ => todo!(),
+        }
+    });
+    println!("Day {:02} input parsing took {elapsed:?}", args.day);
 
     let (part1, elapsed) = time(|| solver.part_01());
     println!("Day {:02}, Part 1 ({elapsed:?}): {}", args.day, part1);
@@ -39,7 +42,7 @@ pub struct Args {
     pub sample: bool,
 }
 
-fn time<F: FnOnce() -> String>(f: F) -> (String, Duration) {
+fn time<T, F: FnOnce() -> T>(f: F) -> (T, Duration) {
     let now = Instant::now();
     let result = f();
     let elapsed = now.elapsed();
