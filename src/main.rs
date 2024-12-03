@@ -21,6 +21,7 @@ fn main() {
     let solver: Box<dyn Solver> = match args.day {
         01 => solutions::Solver01::new(&input),
         02 => solutions::Solver02::new(&input),
+        03 => solutions::Solver03::new(&input),
         _ => todo!(),
     };
 
