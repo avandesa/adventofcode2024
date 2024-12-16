@@ -23,6 +23,7 @@ fn main() {
             1 => Box::new(solutions::Solver01::new(&input)),
             2 => Box::new(solutions::Solver02::new(&input)),
             3 => Box::new(solutions::Solver03::new(&input)),
+            4 => Box::new(solutions::Solver04::new(&input)),
             _ => todo!(),
         }
     });
